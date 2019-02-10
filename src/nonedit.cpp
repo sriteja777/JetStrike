@@ -16,6 +16,14 @@
 
 using namespace std;
 
+void get_resolution(int* width, int*height) {
+    const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+    *width = mode->width;
+    *height = mode->height;
+}
+
+
 /* Initialise glfw window, I/O callbacks and the renderer to use */
 /* Nothing to Edit here */
 GLFWwindow*initGLFW(int width, int height) {
@@ -30,6 +38,10 @@ GLFWwindow*initGLFW(int width, int height) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,                 3);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT,           GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    if (width == -1 || height == -1) {
+        get_resolution(&width, &height);
+    }
 
     window = glfwCreateWindow(width, height, "Sample OpenGL 3.3 Application", NULL, NULL);
 
@@ -66,6 +78,9 @@ GLFWwindow*initGLFW(int width, int height) {
     /* Register function to handle mouse click */
     glfwSetMouseButtonCallback(window, mouseButton); // mouse button clicks
     glfwSetScrollCallback(window, scroll_callback);
+    glfwSetCursorPosCallback(window, cursor_pos_callback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetCursorPos(window, 1366/2, 768/2);
 
     return window;
 }
@@ -220,6 +235,7 @@ void draw3DObject(struct VAO *vao) {
     glEnableVertexAttribArray(1);
     // Bind the VBO to use
     glBindBuffer(GL_ARRAY_BUFFER, vao->ColorBuffer);
+    
 
     // Draw the geometry !
     glDrawArrays(vao->PrimitiveMode, 0, vao->NumVertices); // Starting from vertex 0; 3 vertices total -> 1 triangle

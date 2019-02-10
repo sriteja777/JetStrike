@@ -34,6 +34,7 @@ void keyboard(GLFWwindow *window, int key, int scancode, int action, int mods);
 void keyboardChar(GLFWwindow *window, unsigned int key);
 void mouseButton(GLFWwindow *window, int button, int action, int mods);
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
+void cursor_pos_callback(GLFWwindow *window, double xpos, double ypos);
 
 // other_handlers.cpp
 void error_callback(int error, const char *description);
@@ -74,14 +75,31 @@ struct bounding_box_t {
 
 bool detect_collision(bounding_box_t a, bounding_box_t b);
 
-extern float screen_zoom, screen_center_x, screen_center_y;
+extern float screen_zoom, screen_center_x, screen_center_y, zoom_angle;
 void reset_screen();
 
 // ---- Colors ----
 extern const color_t COLOR_RED;
 extern const color_t COLOR_GREEN;
+extern const color_t COLOR_BLUE;
 extern const color_t COLOR_BLACK;
 extern const color_t COLOR_BACKGROUND;
 extern const color_t COLOR_DARK_TURQUOISE;
+extern const color_t COLOR_SADDLE_BROWN;
+extern const color_t COLOR_GOLD;
+extern const color_t COLOR_DIAMOND;
+extern const color_t COLOR_CHOCOLATE;
+extern const color_t COLOR_CRIMSON;
+extern const color_t COLOR_PERU;
+extern const color_t COLOR_NAVAJO_WHITE;
+extern const color_t COLOR_SKIN;
+extern const color_t COLOR_NAVY;
+extern const color_t COLOR_MAROON;
+extern const color_t COLOR_DARK_ORANGE;
+extern const color_t COLOR_ORANGE_RED;
+extern const color_t COLOR_SKY_BLUE;
+extern const color_t COLOR_SILVER;
+extern const color_t COLOR_ORCHID;
+extern const color_t COLOR_RUST;
 
 #endif

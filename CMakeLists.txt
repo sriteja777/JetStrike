@@ -1,9 +1,13 @@
 project(JetStrike)
 cmake_minimum_required(VERSION 2.8)
+set(CMAKE_CXX_STANDARD 11)
+
 aux_source_directory(src SRC_LIST)
 add_executable(${PROJECT_NAME} ${SRC_LIST})
 
 include(FindPkgConfig)
+
+
 
 pkg_check_modules(GLFW3 REQUIRED glfw3)
 include_directories(${GLFW3_INCLUDE_DIRS})
