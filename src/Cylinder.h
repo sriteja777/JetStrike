@@ -15,6 +15,9 @@ public:
     float rotation;
     void draw(glm::mat4 VP);
     double length,radius;
+    glm::mat4 model_matrix;
+    void update_position(glm::vec3 change);
+    void rotate(float angle, glm::vec3 point , glm::vec3 axis);
 private:
     VAO *object;
 };

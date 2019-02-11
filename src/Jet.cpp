@@ -13,12 +13,7 @@ Jet::Jet(glm::vec3 position) {
     float fuselage_radius = 0.25;
     float cockpit_length = 0.5;
     float tail_length = 0.5;
-//    GLfloat wing_coordinates[] = {
-//            0.4f, 0.1f, 0.0f,
-//            -0.4f, 0.1f, 0.0f,
-//            -0.4f, -0.1f, 0.0f,
-//            0.4f, -0.1f, 0.0f,
-//    };
+
 
     GLfloat wing_coordinates[] = {
             0.0f, 0.0f, 0.0f,
@@ -26,6 +21,7 @@ Jet::Jet(glm::vec3 position) {
             -0.2f, -0.175f, 0.0f,
             -0.2f, -0.15f, 0.0f,
     };
+
 
 
     this->fuselage = Cylinder(position.x, position.y, position.z, fuselage_length, fuselage_radius, COLOR_RUST);
@@ -37,10 +33,10 @@ Jet::Jet(glm::vec3 position) {
                                   COLOR_DARK_ORANGE, glm::vec3(6.0f, 4.0f, 0.0f), -90.0f, glm::vec3(1, 0, 0));
     this->right_wing = TwoDPolygon(4, wing_coordinates, glm::vec3(position.x + fuselage_radius, position.y, position.z),
                                   COLOR_DARK_ORANGE, glm::vec3(6.0f, 4.0f, 0.0f), -90.0f, glm::vec3(1, 0, 0));
-
+    right_wing.reflect(glm::vec3());
     this->left_horizontal_stabiliser = TwoDPolygon(4, wing_coordinates, glm::vec3(position.x, position.y+0.15, position.z + fuselage_length+0.1), COLOR_DARK_ORANGE, glm::vec3(3, 2, 1), -90, glm::vec3(1,0,0));
     this->right_horizontal_stabiliser = TwoDPolygon(4, wing_coordinates, glm::vec3(position.x, position.y+0.15, position.z + fuselage_length+0.1), COLOR_DARK_ORANGE, glm::vec3(3, 2, 1), -90, glm::vec3(1,0,0));
-
+    right_horizontal_stabiliser.reflect(glm::vec3());
     GLfloat ver_coordinates[] = {
             0.0f, 0.0f, 0.0f,
             0.0f, 0.0f, 0.1f,
@@ -66,62 +62,84 @@ void Jet::draw(glm::mat4 VP) {
     this->vertical_stabiliser.draw(VP);
 }
 
-void Jet::update_position_x(float x) {
+void Jet::translate(glm::vec3 diff) {
+    this->fuselage.update_position(diff);
+    this->cockpit.update_position(diff);
+    this->left_wing.update_position(diff);
+    this->right_wing.update_position(diff);
+    this->tail.update_position(diff);
+    this->left_horizontal_stabiliser.update_position(diff);
+    this->right_horizontal_stabiliser.update_position(diff);
+    this->vertical_stabiliser.update_position(diff);
+}
 
+void Jet::update_position_x(float x) {
+    glm::vec3 diff = glm::vec3(x,0,0);
     this->position.x += x;
-    this->fuselage.position.x +=x;
-    this->cockpit.position.x += x;
-    this->left_wing.position.x += x;
-    this->right_wing.position.x += x;
-    this->tail.position.x += x;
-    this->left_horizontal_stabiliser.position.x += x;
-    this->right_horizontal_stabiliser.position.x += x;
-    this->vertical_stabiliser.position.x += x;
+    this->translate(diff);
+
 //    cam.eye.x += x;
 //    cam.target.x +=x;
 }
 
 void Jet::update_position_y(float y) {
-
+    glm::vec3 diff = glm::vec3(0,y,0);
     this->position.y += y;
-    this->fuselage.position.y +=y;
-    this->cockpit.position.y += y;
-    this->left_wing.position.y += y;
-    this->right_wing.position.y += y;
-    this->tail.position.y += y;
-    this->left_horizontal_stabiliser.position.y += y;
-    this->right_horizontal_stabiliser.position.y += y;
-    this->vertical_stabiliser.position.y += y;
+    this->translate(diff);
     //    cam.eye.y -= y;
 //    cam.target.y += y;
 }
 void Jet::update_position_z(float z) {
-
+    glm::vec3 diff = glm::vec3(0,z,0);
     this->position.z += z;
-    this->fuselage.position.z +=z;
-    this->cockpit.position.z += z;
-    this->left_wing.position.z += z;
-    this->right_wing.position.z += z;
-    this->tail.position.z += z;
-    this->left_horizontal_stabiliser.position.z += z;
-    this->right_horizontal_stabiliser.position.z += z;
-    this->vertical_stabiliser.position.z += z;
+    this->translate(diff);
 }
 
 void Jet::update_rotation(float rotate) {
 //    this->body.rotation += rotate;
 }
 
-void Jet::roll() {
+
+
+void Jet::move_left() {
 
 }
 
-void Jet::move_left() {
-//    this.bod34
+
+void Jet::rotate(float angle, glm::vec3 axis) {
+    this->cockpit.rotate(angle, glm::vec3(0, 0, cockpit.length + fuselage.length/2), axis);
+    this->fuselage.rotate(angle, glm::vec3(0,0,fuselage.length/2), axis);
+    this->left_wing.rotate(angle, glm::vec3(fuselage.radius, 0, fuselage.length/2), axis);
+    this->right_wing.rotate(angle, glm::vec3(-fuselage.radius, 0, fuselage.length/2), axis);
+    this->left_horizontal_stabiliser.rotate(angle, glm::vec3(0, -0.15, -fuselage.length/2-0.1), axis);
+    this->right_horizontal_stabiliser.rotate(angle, glm::vec3(0, -0.15, -fuselage.length/2-0.1), axis);
+    this->vertical_stabiliser.rotate(angle, glm::vec3(0, -fuselage.radius, -fuselage.length/2-0.1), axis);
+    this->tail.rotate(angle, glm::vec3(0, -fuselage.radius, -tail.length - fuselage.length/2)  ,axis);
+
 }
 
 void Jet::tick() {
 //    update_position_z(-0.05f);
 //    cam.eye.z -=0.05f;
 //    cam.target.z -=0.05f;
+}
+
+void Jet::roll(int sign) {
+    float angle = sign*0.5f;
+    glm::vec3 axis (0,0,1);
+    this->rotate(angle, axis);
+
+}
+
+void Jet::pitch(int sign) {
+    float angle = sign*0.5f;
+    glm::vec3 axis (1,0,0);
+    this->rotate(angle, axis);
+
+}
+
+void Jet::yaw(int sign) {
+    float angle = sign*0.5f;
+    glm::vec3 axis(0,1,0);
+    this->rotate(angle, axis);
 }

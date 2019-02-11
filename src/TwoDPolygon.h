@@ -23,6 +23,11 @@ public:
     void convertCoordinatesToVertices(GLfloat *coordinates, int n, glm::vec3 *vertices);
     void draw(glm::mat4 VP, bool reflect= false);
     glm::vec3 scale;
+    void model(glm::vec3 axis = glm::vec3(1,0,0));
+    void rotate(float angle, glm::vec3 point , glm::vec3 axis);
+    void update_position(glm::vec3 change);
+    void reflect(glm::vec3 axis);
+    glm::mat4 model_matrix;
 private:
     glm::vec3 centroid;
     void copyVectorToArray(glm::vec3 vect, GLfloat *arr, int index);

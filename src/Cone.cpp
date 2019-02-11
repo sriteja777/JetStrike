@@ -52,6 +52,12 @@ Cone::Cone(glm::vec3 position, float length, float radius, color_t color, float 
     }
 
     this->object = create3DObject(GL_TRIANGLES, n*3, vertex_buffer_data, color);
+    model_matrix = glm::mat4(1.0f);
+    glm::mat4 translate = glm::translate (this->position);    // glTranslatef
+    // glm::mat4 orient    = glm::rotate((float) (this->orientation * M_PI / 180.0f), glm::vec3(1,0,0));
+    glm::mat4 rotate    = glm::rotate((float) (this->rotation * M_PI / 180.0f), glm::vec3(0,1,0));
+    model_matrix *= (translate*rotate);
+
 }
 
 void Cone::draw(glm::mat4 VP) {
@@ -62,9 +68,25 @@ void Cone::draw(glm::mat4 VP) {
     // No need as coords centered at 0, 0, 0 of cube arouund which we waant to rotate
     // rotate          = rotate * glm::translate(glm::vec3(0, -0.6, 0));
     Matrices.model *= (translate * rotate);
-    glm::mat4 MVP = VP * Matrices.model;
+    glm::mat4 MVP = VP * model_matrix;
     glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
     // this->new_Barrel_end=Matrices.model*this->Barrel_end;
     // printf("%f %f %f\n",this->new_Barrel_end.x,this->new_Barrel_end.y,this->new_Barrel_end.z);
     draw3DObject(this->object);
+}
+
+void Cone::update_position(glm::vec3 change) {
+    this->position += change;
+    glm::mat4 translate = glm::translate (change);
+    this->model_matrix = translate * this->model_matrix;
+}
+
+void Cone::rotate(float angle, glm::vec3 point, glm::vec3 axis) {
+    glm::mat4 translate = glm::translate(-point-this->position);
+    glm::mat4 rotate_mat = glm::rotate(glm::radians(angle), axis);
+    glm::mat4 translate_inv = glm::translate(point+this->position);
+    glm::mat4 total = translate_inv * rotate_mat * translate;
+
+    model_matrix = total * model_matrix;
+
 }

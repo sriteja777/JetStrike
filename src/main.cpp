@@ -68,7 +68,7 @@ void draw() {
 //    ball1.draw(VP);
     ocean.draw(VP);
     player.draw(VP);
-    sphere.draw(VP);
+//    sphere.draw(VP);
 //    temp_cube.draw(VP);
 
 }
@@ -78,6 +78,12 @@ void tick_input(GLFWwindow *window) {
     int right = glfwGetKey(window, GLFW_KEY_RIGHT);
     int up    = glfwGetKey(window, GLFW_KEY_UP);
     int down  = glfwGetKey(window, GLFW_KEY_DOWN);
+    int d = glfwGetKey(window, GLFW_KEY_D);
+    int a = glfwGetKey(window, GLFW_KEY_A);
+    int q = glfwGetKey(window, GLFW_KEY_Q);
+    int e = glfwGetKey(window, GLFW_KEY_E);
+    int z = glfwGetKey(window, GLFW_KEY_Z);
+    int x = glfwGetKey(window, GLFW_KEY_X);
     if (left) {
         player.update_position_x(-0.05f);
         // Do something
@@ -92,6 +98,13 @@ void tick_input(GLFWwindow *window) {
     if (down) {
         player.update_position_y(-0.05f);
     }
+    if (d) player.roll(-1);
+    if (a) player.roll(1);
+    if (x) player.pitch(-1);
+    if (z) player.pitch(1);
+    if (q) player.yaw(1);
+    if (e) player.yaw(-1);
+
 
 }
 

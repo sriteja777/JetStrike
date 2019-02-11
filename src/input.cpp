@@ -61,6 +61,9 @@ void keyboard(GLFWwindow *window, int key, int scancode, int action, int mods) {
 //                cam.eye.x += 0.5 * std::cos(glm::radians(rotation_val));
 //                rotation_val += 10;
                 break;
+            case GLFW_KEY_D:
+                player.roll(+1);
+                break;
             default:
                 break;
         }
@@ -72,8 +75,8 @@ void keyboardChar(GLFWwindow *window, unsigned int key) {
     switch (key) {
         case 'Q':
         case 'q':
-            quit(window);
-            break;
+//            quit(window);
+//            break;
         default:
             break;
     }

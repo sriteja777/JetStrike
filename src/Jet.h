@@ -24,20 +24,30 @@ public:
     TwoDPolygon left_wing;
     TwoDPolygon left_horizontal_stabiliser;
     TwoDPolygon right_horizontal_stabiliser;
-    TwoDPolygon vertical_horizontal_stabiliser;
     TwoDPolygon vertical_stabiliser;
-
     TwoDPolygon right_wing;
+
+    // Displacements
+
+//    glm::vec3 dis_cockpit;
+//    glm::vec3 dis_fuselage;
+//    glm::vec3 dis_left_wing;
+//    glm::vec3 dis_right_wing;
+//    glm::vec3 dis_left_horizontal_stab;
+//    glm::vec3 dis_right_horizontal_stab;
+//    glm::vec3 dis_vertical_stab;
+//    glm::vec3 dis_tail;
     void update_position_x(float x);
     void update_position_y(float y);
     void update_position_z(float z);
     void update_rotation(float rotate);
     void move_left();
-    void yaw();
-    void roll();
-    void pitch();
+    void yaw(int sign);
+    void roll(int sign);
+    void pitch(int sign);
     void tick();
-
+    void rotate(float angle, glm::vec3 axis);
+    void translate(glm::vec3 diff);
 };
 
 
