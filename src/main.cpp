@@ -68,7 +68,7 @@ void draw() {
 //    ball1.draw(VP);
     ocean.draw(VP);
     player.draw(VP);
-//    sphere.draw(VP);
+    sphere.draw(VP);
 //    temp_cube.draw(VP);
 
 }
@@ -84,6 +84,8 @@ void tick_input(GLFWwindow *window) {
     int e = glfwGetKey(window, GLFW_KEY_E);
     int z = glfwGetKey(window, GLFW_KEY_Z);
     int x = glfwGetKey(window, GLFW_KEY_X);
+    int w = glfwGetKey(window, GLFW_KEY_W);
+
     if (left) {
         player.update_position_x(-0.05f);
         // Do something
@@ -104,7 +106,7 @@ void tick_input(GLFWwindow *window) {
     if (z) player.pitch(1);
     if (q) player.yaw(1);
     if (e) player.yaw(-1);
-
+    if (w) player.move_front();
 
 }
 
@@ -115,6 +117,7 @@ void tick_input(GLFWwindow *window) {
 void tick_elements() {
     ball1.tick();
     player.tick();
+    cam.tick();
 //    camera_rotation_angle += 1;
 }
 
@@ -125,9 +128,9 @@ void initGL(GLFWwindow *window, int width, int height) {
     // Create the models
     cam = Camera(glm::vec3(0.0f, 50.0f, 5.0f), glm::vec3(0, 50, 0), glm::vec3(0,1,0));
 //    ball1 = Circle(glm::vec3(0.0f, 50.0f, -10.0f), 10.0f, COLOR_RED, glm::vec3(1,0,0));
-    ocean = Cuboid(glm::vec3(0.0f, -5.0f, 0.0f), 2000.f, 8.f, 1000.f, COLOR_BLUE);
+    ocean = Cuboid(glm::vec3(0.0f, -100.0f, 0.0f), 2000.f, 30.f, 2000.f, COLOR_BLUE);
     player = Jet(glm::vec3(0.0f, 49.0f, 2.0f));
-    sphere = Sphere(glm::vec3(), 5);
+    sphere = Sphere(glm::vec3(player.position.x + 2, player.position.y , player.position.z-10), 0.25);
 //    sphere = Sphere(1);
 //    temp_cube = Cuboid(glm::vec3, )
     // Create and compile our GLSL program from the shaders

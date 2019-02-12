@@ -14,6 +14,9 @@ Jet::Jet(glm::vec3 position) {
     float cockpit_length = 0.5;
     float tail_length = 0.5;
 
+    jet_axis = glm::vec3(0, 0, -1);
+    jet_per_axis = glm::vec3(1,0,0);
+
 
     GLfloat wing_coordinates[] = {
             0.0f, 0.0f, 0.0f,
@@ -47,7 +50,9 @@ Jet::Jet(glm::vec3 position) {
 
 
     this->vertical_stabiliser = TwoDPolygon(4, ver_coordinates, glm::vec3(position.x, position.y+fuselage_radius, position.z + fuselage_length+0.1), COLOR_DARK_ORANGE, glm::vec3(1, 3, 2), 2, glm::vec3(0,0,1));
-//    exit(0);
+
+    this->position = glm::vec3(position.x, position.y, position.z + fuselage_length/2);
+    //    exit(0);
 }
 
 void Jet::draw(glm::mat4 VP) {
@@ -63,6 +68,7 @@ void Jet::draw(glm::mat4 VP) {
 }
 
 void Jet::translate(glm::vec3 diff) {
+
     this->fuselage.update_position(diff);
     this->cockpit.update_position(diff);
     this->left_wing.update_position(diff);
@@ -71,6 +77,12 @@ void Jet::translate(glm::vec3 diff) {
     this->left_horizontal_stabiliser.update_position(diff);
     this->right_horizontal_stabiliser.update_position(diff);
     this->vertical_stabiliser.update_position(diff);
+//    cam.eye.x += diff.x;
+//    cam.eye.y += diff.y;
+//    cam.eye.z += diff.z;
+//    cam.target.x += diff.x;
+//    cam.target.y += diff.y;
+//    cam.target.z += diff.z;
 }
 
 void Jet::update_position_x(float x) {
@@ -90,7 +102,7 @@ void Jet::update_position_y(float y) {
 //    cam.target.y += y;
 }
 void Jet::update_position_z(float z) {
-    glm::vec3 diff = glm::vec3(0,z,0);
+    glm::vec3 diff = glm::vec3(0,0,z);
     this->position.z += z;
     this->translate(diff);
 }
@@ -116,30 +128,58 @@ void Jet::rotate(float angle, glm::vec3 axis) {
     this->vertical_stabiliser.rotate(angle, glm::vec3(0, -fuselage.radius, -fuselage.length/2-0.1), axis);
     this->tail.rotate(angle, glm::vec3(0, -fuselage.radius, -tail.length - fuselage.length/2)  ,axis);
 
+    glm::mat4 rot = glm::rotate(glm::radians(angle), axis);
+    jet_axis = rot * glm::vec4 (jet_axis.x, jet_axis.y, jet_axis.z, 1);
+    jet_per_axis = rot * glm::vec4(jet_per_axis.x, jet_per_axis.y, jet_per_axis.z, 1);
+    printf("\naxis -> %f %f %f\n", jet_axis.x, jet_axis.y, jet_axis.z);
+
 }
 
 void Jet::tick() {
 //    update_position_z(-0.05f);
 //    cam.eye.z -=0.05f;
 //    cam.target.z -=0.05f;
+    float s = 0.01f;
+    printf("\naxis -> %f %f %f\n", jet_axis.x, jet_axis.y, jet_axis.z);
+//    if (jet_axis.y < 0) {
+//        exit(0);
+//    }
+//    update_position_x(jet_axis.x*s);
+//    update_position_y(jet_axis.y*s);
+//    update_position_z(jet_axis.z*s);
+
+
 }
 
 void Jet::roll(int sign) {
-    float angle = sign*0.5f;
-    glm::vec3 axis (0,0,1);
+    float angle = -sign*0.5f;
+    glm::vec3 axis = jet_axis;
     this->rotate(angle, axis);
 
 }
 
 void Jet::pitch(int sign) {
     float angle = sign*0.5f;
-    glm::vec3 axis (1,0,0);
+    glm::vec3 axis = jet_per_axis;
     this->rotate(angle, axis);
+//    float speed = 0.05f;
+//    this->update_position_y(sign*speed);
+
+//    cam.eye.y += sign*speed;
+//    cam.target.y += sign*speed;
 
 }
 
 void Jet::yaw(int sign) {
     float angle = sign*0.5f;
-    glm::vec3 axis(0,1,0);
+    glm::vec3 axis = glm::cross(jet_per_axis, jet_axis);
     this->rotate(angle, axis);
+}
+
+void Jet::move_front() {
+    float speed = 0.05f;
+    update_position_x(jet_axis.x*speed);
+    update_position_y(jet_axis.y*speed);
+    update_position_z(jet_axis.z*speed);
+
 }

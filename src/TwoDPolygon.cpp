@@ -96,29 +96,29 @@ void TwoDPolygon::construct(glm::vec3 vertices[]) {
 }
 
 void TwoDPolygon::draw(glm::mat4 VP, bool reflect) {
-    Matrices.model = glm::mat4(1.0f);
-    glm::mat4 translate = glm::translate (this->position);    // glTranslatef
-    glm::mat4 rotate    = glm::rotate(glm::radians(this->rotation), this->rotation_axis);
-    glm::mat4 scale_mat = glm::scale(this->scale);
-    glm::mat4 ref_mat = glm::mat4(1.0f);
-    if (reflect) {
-        ref_mat[0] = glm::vec4(-1.0f, 0.0f, 0.0f, 0.0f);
-        ref_mat[1] = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
-        ref_mat[2] = glm::vec4(0.0f, 0.0f, -1.0f, 0.0f);
-        ref_mat[3] = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-    }
-//    glm::mat4 reflection = glm::reflect(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
-    // No need as coords centered at 0, 0, 0 of cube around which we want to rotate
-//     rotate          = rotate * glm::translate(glm::vec3(0, -0.6, 0));
-    Matrices.model *= (translate*rotate*scale_mat*ref_mat);
-    printf("                 Start              \n");
-    for (int i=0;i<4;i++) {
-        printf("%f %f %f %f\n", Matrices.model[i].x, Matrices.model[i].y, Matrices.model[i].z, Matrices.model[i].w);
-    }
-    printf("\n");
-    for (int i=0;i<4;i++) {
-        printf("%f %f %f %f\n", model_matrix[i].x, model_matrix[i].y, model_matrix[i].z, model_matrix[i].w);
-    }
+//    Matrices.model = glm::mat4(1.0f);
+//    glm::mat4 translate = glm::translate (this->position);    // glTranslatef
+//    glm::mat4 rotate    = glm::rotate(glm::radians(this->rotation), this->rotation_axis);
+//    glm::mat4 scale_mat = glm::scale(this->scale);
+//    glm::mat4 ref_mat = glm::mat4(1.0f);
+//    if (reflect) {
+//        ref_mat[0] = glm::vec4(-1.0f, 0.0f, 0.0f, 0.0f);
+//        ref_mat[1] = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+//        ref_mat[2] = glm::vec4(0.0f, 0.0f, -1.0f, 0.0f);
+//        ref_mat[3] = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+//    }
+////    glm::mat4 reflection = glm::reflect(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+//    // No need as coords centered at 0, 0, 0 of cube around which we want to rotate
+////     rotate          = rotate * glm::translate(glm::vec3(0, -0.6, 0));
+//    Matrices.model *= (translate*rotate*scale_mat*ref_mat);
+//    printf("                 Start              \n");
+//    for (int i=0;i<4;i++) {
+//        printf("%f %f %f %f\n", Matrices.model[i].x, Matrices.model[i].y, Matrices.model[i].z, Matrices.model[i].w);
+//    }
+//    printf("\n");
+//    for (int i=0;i<4;i++) {
+//        printf("%f %f %f %f\n", model_matrix[i].x, model_matrix[i].y, model_matrix[i].z, model_matrix[i].w);
+//    }
 //    exit(0);
 //    model_matrix *= translate;
     glm::mat4 MVP = VP * model_matrix;

@@ -14,6 +14,8 @@ public:
     glm::vec3 target;
     glm::vec3 up;
 
+    void tick();
+
 };
 
 
