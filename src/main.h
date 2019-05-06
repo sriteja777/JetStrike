@@ -15,6 +15,14 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#define X_AXIS glm::vec3(1,0,0)
+#define Y_AXIS glm::vec3(0,1,0)
+#define Z_AXIS glm::vec3(0,0,1)
+#define ORIGIN glm::vec3(0,0,0)
+#define DEBUG  false
+
+
+
 struct color_t {
     int r;
     int g;
@@ -28,6 +36,9 @@ struct VAO *create3DObject(GLenum primitive_mode, int numVertices, const GLfloat
 struct VAO *create3DObject(GLenum primitive_mode, int numVertices, const GLfloat *vertex_buffer_data, const GLfloat red, const GLfloat green, const GLfloat blue, GLenum fill_mode = GL_FILL);
 struct VAO *create3DObject(GLenum primitive_mode, int numVertices, const GLfloat *vertex_buffer_data, const color_t color, GLenum fill_mode = GL_FILL);
 void       draw3DObject(struct VAO *vao);
+void get_resolution(int* width, int*height);
+
+
 
 // input.cpp
 void keyboard(GLFWwindow *window, int key, int scancode, int action, int mods);
@@ -40,6 +51,9 @@ void cursor_pos_callback(GLFWwindow *window, double xpos, double ypos);
 void error_callback(int error, const char *description);
 void quit(GLFWwindow *window);
 void reshapeWindow(GLFWwindow *window, int width, int height);
+
+// utility.cpp
+void print_mat4(glm::mat4 matrix);
 
 // Types
 struct VAO {
@@ -62,9 +76,12 @@ struct GLMatrices {
 
 extern GLMatrices Matrices;
 
+
+
 // ---- Logic ----
 
 enum direction_t { DIR_UP, DIR_RIGHT, DIR_DOWN, DIR_LEFT };
+enum view {plane = 200, top=1000, tower=2000, follow=150, helicopter=250};
 
 struct bounding_box_t {
     float x;
@@ -101,5 +118,13 @@ extern const color_t COLOR_SKY_BLUE;
 extern const color_t COLOR_SILVER;
 extern const color_t COLOR_ORCHID;
 extern const color_t COLOR_RUST;
-
+extern const color_t COLOR_YELLOW;
+extern const color_t COLOR_LIME;
+extern const color_t COLOR_WHITE;
+extern const color_t COLOR_MAGNETA;
+extern const color_t COLOR_THISTLE;
+extern const color_t COLOR_SANDY_BROWN;
+extern const color_t COLOR_DEEP_PINK;
+extern const color_t COLOR_DIM_GREY;
+extern const color_t COLOR_GAINSBORO;
 #endif
