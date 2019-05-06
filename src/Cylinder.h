@@ -10,14 +10,16 @@
 class Cylinder {
 public:
     Cylinder() {}
-    Cylinder(float x, float y, float z, float, float, color_t);
+    Cylinder(glm::vec3 position, float, float, color_t, glm::vec3 scale = {1,1,1});
     glm::vec3 position;
     float rotation;
     void draw(glm::mat4 VP);
-    double length,radius;
+    float length,radius;
     glm::mat4 model_matrix;
     void update_position(glm::vec3 change);
     void rotate(float angle, glm::vec3 point , glm::vec3 axis);
+    void rotate(glm::mat4 rotate_mat, glm::vec3 point = ORIGIN);
+    void align();
 private:
     VAO *object;
 };
