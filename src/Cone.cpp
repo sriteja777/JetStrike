@@ -5,7 +5,7 @@
 #include "Cone.h"
 
 Cone::Cone(glm::vec3 position, float length, float radius, color_t color, float initial_rotation_angle,
-           glm::vec3 rotation_axis) {
+           glm::vec3 rotation_axis, glm::vec3 scale) {
     this->position = position;
     this->length = length;
     this->radius = radius;
@@ -55,8 +55,9 @@ Cone::Cone(glm::vec3 position, float length, float radius, color_t color, float 
     model_matrix = glm::mat4(1.0f);
     glm::mat4 translate = glm::translate (this->position);    // glTranslatef
     // glm::mat4 orient    = glm::rotate((float) (this->orientation * M_PI / 180.0f), glm::vec3(1,0,0));
-    glm::mat4 rotate    = glm::rotate((float) (this->rotation * M_PI / 180.0f), glm::vec3(0,1,0));
-    model_matrix *= (translate*rotate);
+    glm::mat4 rotate    = glm::rotate((float) (this->rotation * M_PI / 180.0f), rotation_axis);
+    glm::mat4 scale_mat = glm::scale(scale);
+    model_matrix *= (translate*rotate*scale_mat);
 
 }
 
@@ -89,4 +90,15 @@ void Cone::rotate(float angle, glm::vec3 point, glm::vec3 axis) {
 
     model_matrix = total * model_matrix;
 
+}
+
+
+void Cone::rotate(glm::mat4 rotate_mat, glm::vec3 point) {
+
+    glm::mat4 translate = glm::translate(-point-this->position);
+    glm::mat4 translate_inv = glm::translate(point+this->position);
+
+    glm::mat4 total = translate_inv * rotate_mat * translate;
+
+    model_matrix = total * model_matrix;
 }
