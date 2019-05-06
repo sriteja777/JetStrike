@@ -9,12 +9,17 @@
 class Camera {
 public:
     Camera() {}
-    Camera(glm::vec3 eye, glm::vec3 target, glm::vec3 up);
+    Camera(view cam_view);
     glm::vec3 eye;
     glm::vec3 target;
     glm::vec3 up;
-
+    view cam_view;
+    glm::vec3 hel_rotation;
+    float hel_radius;
     void tick();
+    void change_view(view cam_view);
+    void set_view(view cam_view);
+
 
 };
 
