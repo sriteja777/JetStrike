@@ -131,11 +131,13 @@ void TwoDPolygon::draw(glm::mat4 VP, bool reflect) {
 
 
 void TwoDPolygon::model(glm::vec3 axis) {
-    printf("                 Start              \n");
+
     axis = glm::vec3(1,1,0);
     glm::mat4 rot (1.0f);
-    for (int i=0;i<4;i++) {
-        printf("%f %f %f %f\n", rot[i].x, rot[i].y, rot[i].z, rot[i].w);
+    if (DEBUG) {
+        for (int i = 0; i < 4; i++) {
+            printf("%f %f %f %f\n", rot[i].x, rot[i].y, rot[i].z, rot[i].w);
+        }
     }
     rot[0] = glm::vec4(axis.x, axis.y, axis.z, 0);
     glm::vec3 temp = glm::cross(axis, glm::vec3(1, 0, 0));
@@ -169,12 +171,11 @@ void TwoDPolygon::rotate(float angle, glm::vec3  point, glm::vec3 axis) {
 
     glm::vec4 temp =  total * glm::vec4(position.x, position.y, position.z, 1);
 //    position  = temp;
-//    this->position.x = temp.x;
-//    this->position.y = temp.y;
-//    this->position.z = temp.z;
 
-    printf("start\n%f %f %f %f\n",temp.x, temp.y, temp.z, temp.w);
-    printf("start\n%f %f %f\n",position.x, position.y, position.z);
+    if (DEBUG) {
+        printf("start\n%f %f %f %f\n", temp.x, temp.y, temp.z, temp.w);
+        printf("start\n%f %f %f\n", position.x, position.y, position.z);
+    }
 //    exit(0);
 //    model_matrix = (rotate_mat) * model_matrix;
 //    position += point;
@@ -183,25 +184,32 @@ void TwoDPolygon::rotate(float angle, glm::vec3  point, glm::vec3 axis) {
 }
 
 void TwoDPolygon::update_position(glm::vec3 change) {
-    printf("start\n");
-    printf("%f %f %f\n",change.x, change.y, change.z);
-    printf("%f %f %f\n", position.x, position.y, position.z);
+    if (DEBUG) {
+        printf("start\n");
+        printf("%f %f %f\n", change.x, change.y, change.z);
+        printf("%f %f %f\n", position.x, position.y, position.z);
+    }
     this->position += change;
-    printf("%f %f %f\n", position.x, position.y, position.z);
     glm::mat4 translate = glm::translate (change);
 
-    printf("\n\n");
-    for (int i=0;i<4;i++) {
-        printf("%f %f %f %f\n", model_matrix[i].x, model_matrix[i].y, model_matrix[i].z, model_matrix[i].w);
+    if (DEBUG) {
+        printf("%f %f %f\n", position.x, position.y, position.z);
+        printf("\n\n");
+        for (int i = 0; i < 4; i++) {
+            printf("%f %f %f %f\n", model_matrix[i].x, model_matrix[i].y, model_matrix[i].z, model_matrix[i].w);
+        }
     }
     this->model_matrix = translate * model_matrix;
-    printf("\n");
-    for (int i=0;i<4;i++) {
-        printf("%f %f %f %f\n", model_matrix[i].x, model_matrix[i].y, model_matrix[i].z, model_matrix[i].w);
-    }
-    printf("\n");
-    for (int i=0;i<4;i++) {
-        printf("%f %f %f %f\n", translate[i].x, translate[i].y, translate[i].z, translate[i].w);
+
+    if (DEBUG) {
+        printf("\n");
+        for (int i = 0; i < 4; i++) {
+            printf("%f %f %f %f\n", model_matrix[i].x, model_matrix[i].y, model_matrix[i].z, model_matrix[i].w);
+        }
+        printf("\n");
+        for (int i = 0; i < 4; i++) {
+            printf("%f %f %f %f\n", translate[i].x, translate[i].y, translate[i].z, translate[i].w);
+        }
     }
 //    exit(0);
 }
@@ -209,9 +217,41 @@ void TwoDPolygon::update_position(glm::vec3 change) {
 
 void TwoDPolygon::reflect(glm::vec3 axis) {
     glm::mat4 ref_mat;
-    ref_mat[0] = glm::vec4(-1.0f, 0.0f, 0.0f, 0.0f);
-    ref_mat[1] = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
-    ref_mat[2] = glm::vec4(0.0f, 0.0f, -1.0f, 0.0f);
-    ref_mat[3] = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-    model_matrix =  model_matrix  * ref_mat;
+    if (axis == Y_AXIS) {
+        ref_mat[0] = glm::vec4(-1.0f, 0.0f, 0.0f, 0.0f);
+        ref_mat[1] = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+        ref_mat[2] = glm::vec4(0.0f, 0.0f, -1.0f, 0.0f);
+        ref_mat[3] = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+    }
+    else if (axis == X_AXIS) {
+        ref_mat[0] = glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
+        ref_mat[1] = glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
+        ref_mat[2] = glm::vec4(0.0f, 0.0f, -1.0f, 0.0f);
+        ref_mat[3] = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+    }
+    else if (axis == Z_AXIS) {
+        ref_mat[0] = glm::vec4(-1.0f, 0.0f, 0.0f, 0.0f);
+        ref_mat[1] = glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
+        ref_mat[2] = glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
+        ref_mat[3] = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+    }
+    model_matrix = model_matrix * ref_mat;
+
+}
+
+
+
+void TwoDPolygon::rotate(glm::mat4 rotate_mat, glm::vec3 point) {
+    glm::mat4 translate = glm::translate(-point-this->position);
+//    glm::mat4 rotate_mat = glm::rotate(glm::radians(angle), axis);
+    glm::mat4 translate_inv = glm::translate(point+this->position);
+
+    glm::mat4 total = translate_inv * rotate_mat * translate;
+//    glm::mat4 translate_inv = glm::inverse(translate);
+    model_matrix = total * model_matrix;
+
+    glm::vec4 temp =  total * glm::vec4(position.x, position.y, position.z, 1);
 }

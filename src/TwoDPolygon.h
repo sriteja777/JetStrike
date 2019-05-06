@@ -27,6 +27,7 @@ public:
     void rotate(float angle, glm::vec3 point , glm::vec3 axis);
     void update_position(glm::vec3 change);
     void reflect(glm::vec3 axis);
+    void rotate(glm::mat4 rotate_mat, glm::vec3 point = ORIGIN);
     glm::mat4 model_matrix;
 private:
     glm::vec3 centroid;
