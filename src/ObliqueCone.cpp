@@ -19,7 +19,7 @@ ObliqueCone::ObliqueCone(glm::vec3 position, glm::vec3 base_center, float length
 
     float angle = 0.0f;
     int n=360;
-    printf("differnec -> %f, %f",difference.x, difference.y);
+    if (DEBUG) printf("differnec -> %f, %f",difference.x, difference.y);
 //    exit(0);
     for(int i=0,j=1;i<n;i++,j++) {
         vertex_buffer_data[idx++] = 0.0f;
@@ -38,7 +38,7 @@ ObliqueCone::ObliqueCone(glm::vec3 position, glm::vec3 base_center, float length
     this->object = create3DObject(GL_TRIANGLES, n*3, vertex_buffer_data, color);
     model_matrix = glm::mat4(1.0f);
     glm::mat4 translate = glm::translate (this->position);
-    glm::mat4 rotate    = glm::rotate((float) (this->rotation * M_PI / 180.0f), glm::vec3(0,1,0));
+    glm::mat4 rotate    = glm::rotate((float) (this->rotation * M_PI / 180.0f), this->rotation_axis);
     model_matrix *= (translate*rotate);
 }
 
