@@ -79,7 +79,7 @@ GLFWwindow*initGLFW(int width, int height) {
     glfwSetMouseButtonCallback(window, mouseButton); // mouse button clicks
     glfwSetScrollCallback(window, scroll_callback);
     glfwSetCursorPosCallback(window, cursor_pos_callback);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+//    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetCursorPos(window, 1366/2, 768/2);
 
     return window;
