@@ -14,5 +14,5 @@ make all
 arg=$1
 if [ "$arg" == "-r" ]
 then
-	./GravityJoyride
+	./JetStrike
 fi
