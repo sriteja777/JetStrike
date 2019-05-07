@@ -26,10 +26,10 @@ To run the game run the file install.sh with '-r' argument
 <kbd>E</kbd> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- &nbsp;yaw right<br/>
 <kbd>Z</kbd> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- &nbsp;pitch up<br/>
 <kbd>X</kbd> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- &nbsp;pitch down<br/>
-<kbd>Left click</kbd> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp; shoot bullets<br/>
-<kbd>Right click</kbd> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp; throw bombs
+<kbd>Left click</kbd> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp; shoot bullets<br/>
+<kbd>Right click</kbd> &nbsp;&nbsp;&nbsp;&nbsp;-&nbsp; throw bombs
 
-##### _Camera Controls_
+#### _Camera Controls_
 <kbd>F1</kbd> - plane view<br/>
 <kbd>F2</kbd> - top view<br/>
 <kbd>F3</kbd> - tower view<br/>
